@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "271123722450",
+    "project_id": "barbearia-dono-app",
+    "storage_bucket": "barbearia-dono-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:271123722450:android:4e54972f31fcd184bffd0b",
+        "android_client_info": {
+          "package_name": "com.barbeariadono.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "271123722450-mqn5dm20po8tn95oigrgm7ak0ddvgk43.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.barbeariadono.dev",
+            "certificate_hash": "d042f8d8cf8a906ce8ff19a199227d3b9a52c58c"
+          }
+        },
+        {
+          "client_id": "271123722450-ta24vhtstqkjg9o38vvc2bjo3uhthsba.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpyUsMwymhDX9mT4LLuFZT6TekiUwLV9Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "271123722450-ta24vhtstqkjg9o38vvc2bjo3uhthsba.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "271123722450-qfq2rd2dchgp4tbo89va2h2k9nl6fku9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.barbeariaApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:271123722450:android:d2c4d9daee97c5e3bffd0b",
+        "android_client_info": {
+          "package_name": "com.example.barbearia_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "271123722450-ta24vhtstqkjg9o38vvc2bjo3uhthsba.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpyUsMwymhDX9mT4LLuFZT6TekiUwLV9Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "271123722450-ta24vhtstqkjg9o38vvc2bjo3uhthsba.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "271123722450-qfq2rd2dchgp4tbo89va2h2k9nl6fku9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.barbeariaApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

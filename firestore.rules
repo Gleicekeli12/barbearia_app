@@ -1,0 +1,169 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ================= NOTIFICAÇÕES =================
+match /notificacoes/{notificacaoId} {
+  allow read: if isSignedIn() &&
+    (
+      resource.data.userId == request.auth.uid ||
+      (resource.data.userId == "admin" && isAdmin())
+    );
+
+  allow create: if isSignedIn()
+  && (
+    isAdmin() ||
+    request.resource.data.userId == "admin" ||
+    request.resource.data.userId == request.auth.uid
+  );
+
+  allow update: if isSignedIn() &&
+    (
+      resource.data.userId == request.auth.uid ||
+      (resource.data.userId == "admin" && isAdmin())
+    );
+
+  allow delete: if false;
+}
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+  return isSignedIn() && request.auth.uid == userId;
+   }
+    function isAdmin() {
+      return isSignedIn() &&
+        exists(/databases/$(database)/documents/usuarios/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.tipo == "admin";
+    }
+
+// ================= USUÁRIOS =================
+match /usuarios/{userId} {
+  allow list: if isAdmin();
+
+  allow get: if isOwner(userId) || isAdmin();
+
+  allow create: if isOwner(userId)
+    && request.resource.data.nome is string
+    && request.resource.data.email == request.auth.token.email
+    && request.resource.data.tipo == "cliente";
+
+ allow update: if isAdmin() || (
+  isOwner(userId)
+  && request.resource.data.tipo == resource.data.tipo
+  && request.resource.data.diff(resource.data).changedKeys().hasOnly([
+    "nome",
+    "nomeCompleto",
+    "nomeBusca",
+    "cadastroCompleto",
+    "fcmToken",
+    "fcmTokens",
+    "fcmAtualizadoEm",
+    "emailPendente",
+    "emailAtual",
+    "atualizadoEm"
+  ])
+);
+
+  allow delete: if false;
+}
+    // ================= CATEGORIAS =================
+    match /categorias_servicos/{categoriaId} {
+      allow read: if isSignedIn();
+
+      allow create: if isAdmin()
+        && request.resource.data.nome is string
+        && request.resource.data.nome.size() > 0;
+
+      allow update: if isAdmin();
+
+      allow delete: if isAdmin();
+    }
+
+    // ================= SERVIÇOS =================
+    match /servicos/{servicoId} {
+      allow read: if isSignedIn();
+
+      allow create: if isAdmin()
+        && request.resource.data.nome is string
+        && request.resource.data.nome.size() > 0
+        && request.resource.data.preco is number
+        && request.resource.data.categoriaId is string
+        && request.resource.data.categoriaNome is string;
+
+      allow update: if isAdmin();
+
+      allow delete: if isAdmin();
+    }
+
+    // ================= BARBEIROS =================
+    match /barbeiros/{barbeiroId} {
+      allow read: if isSignedIn();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ================= PLANOS =================
+    match /planos/{planoId} {
+      allow read: if isSignedIn();
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // ================= ASSINATURA PLANOS =================
+match /assinaturas_planos/{assinaturaId} {
+
+  // Admin lê tudo.
+  // Cliente lê somente a própria assinatura.
+  allow read: if isAdmin() ||
+    (isSignedIn() && resource.data.userId == request.auth.uid);
+
+  // A assinatura deve ser criada pela Cloud Function.
+  // Cloud Functions Admin SDK ignora rules, então isso é mais seguro.
+  allow create: if false;
+
+  // Cliente NÃO atualiza assinatura direto.
+  // Status de pagamento vem do webhook/Cloud Function.
+  allow update: if false;
+
+  // Não deletar assinatura pelo app.
+  allow delete: if false;
+}
+
+    // ================= CONFIGURAÇÕES =================
+    match /configuracoes/{configId} {
+  allow read: if configId == "app" || isSignedIn();
+
+  allow create, update, delete: if isAdmin();
+}
+
+    // ================= AGENDAMENTOS =================
+match /agendamentos/{agendamentoId} {
+
+  allow read: if isSignedIn();
+
+  allow create: if false;
+
+  allow update: if isAdmin() || (
+  isSignedIn()
+  && resource.data.userId == request.auth.uid
+  && request.resource.data.status == "cancelado"
+  && request.resource.data.diff(resource.data).changedKeys().hasOnly([
+    "status",
+    "canceladoPor",
+    "canceladoPorNome",
+    "canceladoEm",
+    "atualizadoEm"
+  ])
+);
+
+  allow delete: if false;
+}
+
+match /controle_tempo/{docId} {
+  allow read: if true;
+  allow write: if false;
+}
+
+  }
+  
+}

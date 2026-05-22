@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "barbearia-dono-app",
+    "producao-dono": "barbearia-dono-app"
+  },
+  "targets": {},
+  "etags": {}
+}

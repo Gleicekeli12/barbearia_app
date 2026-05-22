@@ -1,0 +1,54 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "barbearia-dono-app",
+          "appId": "1:271123722450:android:4e54972f31fcd184bffd0b",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "firestore": { "rules": "firestore.rules" },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "barbearia-dono-app",
+          "configurations": {
+            "android": "1:271123722450:android:4e54972f31fcd184bffd0b",
+            "ios": "1:271123722450:ios:1ed2b5ae91e9888ebffd0b",
+            "web": "1:271123722450:web:980e4e6e480a08bbbffd0b",
+            "windows": "1:271123722450:web:ebafc2bab7dfd601bffd0b"
+          }
+        }
+      }
+    }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "disallowLegacyRuntimeConfig": true,
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
+    }
+  ],
+  "firestore": {
+    "database": "(default)",
+    "location": "southamerica-east1",
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "hosting": {
+    "site": "gmbarbearia",
+    "public": "build/web",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [{ "source": "**", "destination": "/index.html" }]
+  }
+}

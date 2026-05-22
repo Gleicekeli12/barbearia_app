@@ -1,0 +1,37 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isAdmin() {
+      return request.auth != null
+        && exists(/databases/(default)/documents/usuarios/$(request.auth.uid))
+        && get(/databases/(default)/documents/usuarios/$(request.auth.uid)).data.tipo == "admin";
+    }
+
+    // ================= BARBEIROS =================
+    match /barbeiros/{arquivo} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // ================= SERVIÇOS =================
+    match /servicos/{arquivo} {
+  allow read: if true;
+  allow write: if request.auth != null;
+}
+
+    // ================= CATEGORIAS =================
+    match /categorias/{arquivo} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // ================= USUÁRIOS =================
+    match /usuarios/{userId}/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null
+        && request.auth.uid == userId;
+    }
+  }
+}
